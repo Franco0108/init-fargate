@@ -1,16 +1,13 @@
-FROM php:8.2-apache
+# Dockerfile
+FROM php:8.2-cli
 
-# Habilitar módulos necesarios
-RUN a2enmod rewrite
+WORKDIR /var/www/html
 
-# Cambiar Apache a puerto 8080
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
-    sed -i 's/<VirtualHost \*:80>/<VirtualHost \*:8080>/' /etc/apache2/sites-available/000-default.conf
-
-# Copiar código
+# Copiamos la app PHP
 COPY src/ /var/www/html/
 
-# Puerto para ECS Fargate
+# Exponemos el puerto 8080
 EXPOSE 8080
 
-CMD ["apache2-foreground"]
+# Servidor PHP embebido escuchando en 0.0.0.0:8080
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
