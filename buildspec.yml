@@ -1,13 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    IMAGE_REPO_NAME: "fargate-php-basic"
-    IMAGE_TAG: "latest"
-  parameter-store:
-    AWS_ACCOUNT_ID: "/account/id"
-    AWS_REGION: "/account/region"
-
 phases:
   pre_build:
     commands:
